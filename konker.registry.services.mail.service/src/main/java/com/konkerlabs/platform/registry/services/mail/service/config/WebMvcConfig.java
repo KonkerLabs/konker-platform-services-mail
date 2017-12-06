@@ -1,7 +1,7 @@
 package com.konkerlabs.platform.registry.services.mail.service.config;
 
 
-import com.konkerlabs.platform.registry.alerts.web.interceptor.RequestResponseInterceptor;
+import com.konkerlabs.platform.registry.services.mail.service.interceptor.RequestResponseInterceptor;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.context.MessageSource;
