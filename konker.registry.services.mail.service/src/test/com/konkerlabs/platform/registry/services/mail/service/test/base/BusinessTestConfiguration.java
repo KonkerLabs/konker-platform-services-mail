@@ -1,4 +1,4 @@
-package com.konkerlabs.platform.registry.test.base;
+package com.konkerlabs.platform.registry.services.mail.service.test.base;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

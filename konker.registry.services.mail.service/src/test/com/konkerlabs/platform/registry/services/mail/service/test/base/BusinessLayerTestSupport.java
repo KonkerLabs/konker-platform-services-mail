@@ -1,13 +1,12 @@
-package com.konkerlabs.platform.registry.test.base;
+package com.konkerlabs.platform.registry.services.mail.service.test.base;
 
-import static com.lordofthejars.nosqlunit.mongodb.MongoDbRule.MongoDbRuleBuilder.newMongoDbRule;
-
+import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 import org.junit.After;
 import org.junit.Rule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
+import static com.lordofthejars.nosqlunit.mongodb.MongoDbRule.MongoDbRuleBuilder.newMongoDbRule;
 
 public class BusinessLayerTestSupport {
 

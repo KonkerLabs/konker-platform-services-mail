@@ -1,14 +1,10 @@
-package com.konkerlabs.platform.registry.business.services;
+package com.konkerlabs.platform.registry.services.mail.service.business;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
+import com.konkerlabs.platform.registry.business.model.User;
+import com.konkerlabs.platform.registry.business.services.api.ServiceResponse;
+import com.konkerlabs.platform.registry.business.services.api.ServiceResponse.Status;
+import com.konkerlabs.platform.registry.business.services.api.ServiceResponseBuilder;
+import com.konkerlabs.platform.registry.services.mail.common.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -18,17 +14,15 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
-import com.konkerlabs.platform.registry.business.model.User;
-import com.konkerlabs.platform.registry.business.services.api.EmailService;
-import com.konkerlabs.platform.registry.business.services.api.ServiceResponse;
-import com.konkerlabs.platform.registry.business.services.api.ServiceResponse.Status;
-import com.konkerlabs.platform.registry.business.services.api.ServiceResponseBuilder;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-/**
- * @author Douglas Apolinario
- * @since 28/12/2016
- *
- */
+
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class EmailServiceImpl implements EmailService {
@@ -40,13 +34,13 @@ public class EmailServiceImpl implements EmailService {
 	private SpringTemplateEngine templateEngine;
 
 	@Override
-	public ServiceResponse<Status> send(String sender, 
-									List<User> recipients, 
-									List<User> recipientsCopied, 
-									String subject,
-									String templateName, 
-									Map<String, Object> templateParam,
-									Locale locale) {
+	public ServiceResponse<Status> send(String sender,
+                                        List<User> recipients,
+                                        List<User> recipientsCopied,
+                                        String subject,
+                                        String templateName,
+                                        Map<String, Object> templateParam,
+                                        Locale locale) {
 		try {
 			if (!Optional.ofNullable(sender).isPresent() || sender.isEmpty()) {
 				return ServiceResponseBuilder.<Status>error().withMessage(Validations.SENDER_NULL.getCode()).build();

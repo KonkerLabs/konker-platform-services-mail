@@ -1,14 +1,12 @@
-package com.konkerlabs.platform.registry.config;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.context.annotation.Configuration;
+package com.konkerlabs.platform.registry.services.mail.service.config;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-
 import lombok.Data;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @Data

@@ -1,4 +1,4 @@
-package com.konkerlabs.platform.registry.test.base;
+package com.konkerlabs.platform.registry.services.mail.service.test.base;
 
 import com.github.fakemongo.Fongo;
 import com.konkerlabs.platform.registry.config.MongoConfig;

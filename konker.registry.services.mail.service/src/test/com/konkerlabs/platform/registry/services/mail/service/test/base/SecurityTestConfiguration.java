@@ -1,4 +1,4 @@
-package com.konkerlabs.platform.registry.test.base;
+package com.konkerlabs.platform.registry.services.mail.service.test.base;
 
 import com.konkerlabs.platform.registry.business.model.Tenant;
 import org.springframework.beans.factory.FactoryBean;

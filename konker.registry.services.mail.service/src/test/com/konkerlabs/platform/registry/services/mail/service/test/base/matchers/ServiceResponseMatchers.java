@@ -1,4 +1,4 @@
-package com.konkerlabs.platform.registry.test.base.matchers;
+package com.konkerlabs.platform.registry.services.mail.service.test.base.matchers;
 
 import com.konkerlabs.platform.registry.business.services.api.ServiceResponse;
 import com.konkerlabs.platform.registry.business.services.api.ServiceResponseBuilder;
