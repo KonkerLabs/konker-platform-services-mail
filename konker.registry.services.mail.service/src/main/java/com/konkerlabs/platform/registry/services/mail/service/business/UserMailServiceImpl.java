@@ -1,16 +1,16 @@
 package com.konkerlabs.platform.registry.services.mail.service.business;
 
 
-import com.konkerlabs.platform.registry.business.exceptions.BusinessException;
-import com.konkerlabs.platform.registry.business.model.User;
-import com.konkerlabs.platform.registry.business.model.UserNotification;
-import com.konkerlabs.platform.registry.business.services.api.ServiceResponse;
-import com.konkerlabs.platform.registry.business.services.api.TokenService;
-import com.konkerlabs.platform.registry.business.services.api.UserService;
-import com.konkerlabs.platform.registry.services.mail.common.EmailService;
+import com.konkerlabs.platform.registry.core.common.api.ServiceResponse;
+import com.konkerlabs.platform.registry.core.common.business.api.TokenService;
+import com.konkerlabs.platform.registry.core.common.business.api.UserService;
+import com.konkerlabs.platform.registry.core.common.exceptions.BusinessException;
+import com.konkerlabs.platform.registry.core.common.model.User;
+import com.konkerlabs.platform.registry.core.common.model.UserNotification;
+import com.konkerlabs.platform.registry.services.mail.common.KonkerEmailService;
 import com.konkerlabs.platform.registry.services.mail.common.UserMailService;
 import com.konkerlabs.platform.registry.services.mail.common.exception.MailServiceException;
-import com.konkerlabs.platform.registry.services.mail.service.config.EmailConfig;
+import com.konkerlabs.platform.registry.services.mail.service.config.MailServiceSmtpConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,24 +26,24 @@ import java.util.stream.Collectors;
 public class UserMailServiceImpl implements UserMailService {
 
     @Autowired
-    private TokenService tokenService;
+    private MailServiceSmtpConfig mailServiceSmtpConfig;
     @Autowired
-    private EmailConfig emailConfig;
-    @Autowired
-    private EmailService emailService;
+    private KonkerEmailService emailService;
     @Autowired
     private MessageSource messageSource;
     @Autowired
     private Environment environment;
+    @Autowired
+    private TokenService tokenService;
 
-    private Logger LOGGER = LoggerFactory.getLogger(UserMailServiceImpl.class);
+    private Logger LOG = LoggerFactory.getLogger(UserMailServiceImpl.class);
 
 
     @Override
     public void sendAccountExistsEmail(User user) throws MailServiceException {
         Map<String, Object> templateParam = new HashMap<>();
         try {
-            templateParam.put("link", emailConfig.getBaseurl().concat("subscription/")
+            templateParam.put("link", mailServiceSmtpConfig.getBaseurl().concat("subscription/")
                     .concat(randomToken(user, TokenService.Purpose.VALIDATE_EMAIL)));
             templateParam.put("name", user.getName());
             sendMail(user, templateParam, UserService.Messages.USER_SUBJECT_MAIL,
@@ -57,7 +57,7 @@ public class UserMailServiceImpl implements UserMailService {
     public void sendValidateTokenEmail(User user) throws MailServiceException {
         Map<String, Object> templateParam = new HashMap<>();
         try {
-            templateParam.put("link", emailConfig.getBaseurl()
+            templateParam.put("link", mailServiceSmtpConfig.getBaseurl()
                     .concat("subscription/")
                     .concat(randomToken(user, TokenService.Purpose.VALIDATE_EMAIL)));
             templateParam.put("name", user.getName());
@@ -78,7 +78,7 @@ public class UserMailServiceImpl implements UserMailService {
             templateParam.put("body", saved.getBody());
             sendMail(user, templateParam, saved.getSubject(),
                     "html/email-notification");
-            LOGGER.info("E-mail sent: {}", saved.getSubject());
+            LOG.info("E-mail sent: {}", saved.getSubject());
         } else {
             throw new MailServiceException(Errors.SYSTEM_ERROR.getCode());
         }
@@ -91,7 +91,7 @@ public class UserMailServiceImpl implements UserMailService {
 
         Map<String, Object> templateParam = new HashMap<>();
         templateParam.put("link",
-                emailConfig.getBaseurl().concat("recoverpassword/").concat(responseToken.getResult()));
+                mailServiceSmtpConfig.getBaseurl().concat("recoverpassword/").concat(responseToken.getResult()));
         templateParam.put("name", Optional.ofNullable(user.getName()).orElse(""));
 
         sendMail(user, templateParam, UserMailService.Messages.USER_EMAIL_SUBJECT.getCode(),
@@ -113,7 +113,7 @@ public class UserMailServiceImpl implements UserMailService {
 
     private void sendMail(User user, Map<String, Object> templateParam, String subject, String templateName) {
         emailService.send(
-                emailConfig.getSender(),
+                mailServiceSmtpConfig.getSender(),
                 Collections.singletonList(user),
                 Collections.emptyList(),
                 subject,
@@ -124,7 +124,7 @@ public class UserMailServiceImpl implements UserMailService {
 
     private void sendMail(User user, Map<String, Object> templateParam, UserService.Messages message, String templateName) {
         emailService.send(
-                emailConfig.getSender(),
+                mailServiceSmtpConfig.getSender(),
                 Collections.singletonList(user),
                 Collections.emptyList(),
                 messageSource.getMessage(message.getCode(), null, user.getLanguage().getLocale()),

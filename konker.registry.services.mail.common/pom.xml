@@ -31,8 +31,8 @@
         <!-- Konker -->
         <dependency>
             <groupId>com.konkerlabs</groupId>
-            <artifactId>konker.registry.services.core</artifactId>
-            <version>0.0.1</version>
+            <artifactId>konker.registry.services.core.common</artifactId>
+            <version>${konker.services.core.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.thymeleaf</groupId>
@@ -43,6 +43,11 @@
                     <artifactId>thymeleaf</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.konkerlabs</groupId>
+            <artifactId>konker.registry.services.core.repository</artifactId>
+            <version>${konker.services.core.version}</version>
         </dependency>
     </dependencies>
 

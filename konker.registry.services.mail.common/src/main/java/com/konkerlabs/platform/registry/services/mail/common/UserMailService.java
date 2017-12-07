@@ -1,10 +1,10 @@
 package com.konkerlabs.platform.registry.services.mail.common;
 
-import com.konkerlabs.platform.registry.business.model.User;
-import com.konkerlabs.platform.registry.business.model.UserNotification;
+import com.konkerlabs.platform.registry.core.common.model.User;
+import com.konkerlabs.platform.registry.core.common.model.UserNotification;
 import com.konkerlabs.platform.registry.services.mail.common.exception.MailServiceException;
 
-public interface UserMailService extends IMailService {
+public interface    UserMailService extends IMailService {
 
     enum Errors {
         SYSTEM_ERROR("service.email.system.error");

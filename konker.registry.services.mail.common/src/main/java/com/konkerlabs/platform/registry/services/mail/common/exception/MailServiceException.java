@@ -1,7 +1,6 @@
 package com.konkerlabs.platform.registry.services.mail.common.exception;
 
-import com.konkerlabs.platform.registry.business.exceptions.BusinessException;
-
+import com.konkerlabs.platform.registry.core.common.exceptions.BusinessException;
 
 public class MailServiceException extends BusinessException {
     public MailServiceException(String message) {
